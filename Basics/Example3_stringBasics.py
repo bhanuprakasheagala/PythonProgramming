@@ -12,7 +12,7 @@ def main():
     # Validate and Format the information
     if validate_email(email) and validate_phone(phone):
         display_contact_info(name, email, phone, address)
-        #save_contact_info(name, email, phone, address)
+        save_contact_info(name, email, phone, address)
     else:
         print("Invalid email or phone number format. Please try again!")
 
@@ -55,6 +55,24 @@ def display_contact_info(name, email, phone, address):
     print(f"Email       :{formatted_email}")
     print(f"Phone       :{formatted_phone}")
     print(f"Address     :{formatted_address}")
+
+def save_contact_info(name, email, phone, address):
+    # Format the phone number for storing
+    formatted_phone = format_phone(phone)
+
+    # Prepare the formatted data
+    data = (
+        f"Name      : {name.title()}\n"
+        f"Email     : {email.lower()}\n"
+        f"Phone     : {formatted_phone}\n"
+        f"Address   : {address.title()}\n\n"
+    )
+
+    # Write the data to a file
+    with open("contacts.txt", "a") as file:
+        file.write(data)
+
+    print("Contact information saved to contacts.txt")
 
 if __name__== "__main__":
     main()
