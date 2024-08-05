@@ -1,3 +1,5 @@
+import os
+
 tasks = []
 
 def display_menu():
@@ -6,10 +8,12 @@ def display_menu():
   print("2. View Task")
   print("3. Delete Task")
   print("4. Mark Task as completed")
-  print("5. Exit")
+  print("5. Save tasks")
+  print("6. load_tasks")
+  print("7. Exit")
 
 def add_task(task):
-  tasks.append({"task: " task, "Completed: " False})
+  tasks.append({"task": task, "Completed": False})
   print(f"Task '{task}' added.")
 
 def view_tasks():
@@ -32,6 +36,17 @@ def mark_task_completed(task_number):
   else:
     print("Invalid task number")
 
+def save_tasks():
+  with open('tasks.txt', 'w') as file:
+    for task in tasks:
+      file.write(f"{task['task']}|{task['completed']}\n")
+def load_tasks():
+  if os.path.exists('tasks.txt'):
+    with open('tasks.txt', 'r') as file:
+      for line in file:
+        task, completed = line.strip().split('|')
+        tasks.append({"task": task, "completed": completed == 'True'})
+
 def main():
   while True:
     display_menu()
@@ -40,7 +55,7 @@ def main():
     if choice == '1':
       task = input("Enter task: ")
       add_task(task)
-    elif choice == '2'
+    elif choice == '2':
       view_tasks()
     elif choice == '3':
       view_tasks()
@@ -51,6 +66,10 @@ def main():
       task_number = int(input("Enter task number to mark as completed: "))
       mark_task_complete(task_number)
     elif choice == '5':
+      save_tasks()
+    elif choice == '6':
+      load_tasks()
+    elif choice == '7':
       print("Exiting....")
       break
     else:
@@ -58,5 +77,3 @@ def main():
 
 if __name__ == "__main__":
   main()
-      
-  
